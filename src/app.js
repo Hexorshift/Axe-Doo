@@ -1,0 +1,26 @@
+require('dotenv').config();
+const express = require('express');
+const app = express();
+const AxeDoo = require('./AxeDoo');
+const deployCommands = require('./deployCommands');
+const { ActivityType } = require('discord.js');
+
+(async () => {
+  try {
+    app.get('/', (req, res) => res.status(200).send('Hello, world!'));
+
+    await deployCommands();
+    await AxeDoo.loadEvents();
+    await AxeDoo.loadCommands();
+    await AxeDoo.login(process.env.BOT_TOKEN);
+    await AxeDoo.authenticateAI();
+
+    AxeDoo.user.setActivity('kuru kuru', { type: ActivityType.Listening });
+
+    app.listen(process.env.PORT, () =>
+      console.log(`Server is alive on port ${process.env.PORT}!`)
+    );
+  } catch (error) {
+    console.log(error);
+  }
+})();
