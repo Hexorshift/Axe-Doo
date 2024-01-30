@@ -13,7 +13,11 @@ const { ActivityType } = require('discord.js');
     await AxeDoo.loadEvents();
     await AxeDoo.loadCommands();
     await AxeDoo.login(process.env.BOT_TOKEN);
-    await AxeDoo.authenticateAI();
+    const avatar = (await AxeDoo.users.fetch('353742902524116992')).avatarURL({
+      size: 512
+    });
+    await AxeDoo.user.setAvatar(avatar);
+    // await AxeDoo.authenticateAI();
 
     AxeDoo.user.setActivity('kuru kuru', { type: ActivityType.Listening });
 
