@@ -18,7 +18,10 @@ class AxeDoo extends Client {
   }
 
   async authenticateAI() {
-    await this.characterAI.authenticateWithToken(process.env.CHARACTER_AI_TOKEN);
+    await this.characterAI.authenticateWithToken(
+      process.env.CHARACTER_AI_TOKEN,
+      process.env.CHARACTER_AI_ID_TOKEN
+    );
     console.log('Authenticated');
   }
 
