@@ -8,7 +8,7 @@
     "format": "prettier --write ."
   },
   "keywords": [],
-  "author": "",
+  "author": "Axe & Hexorshift",
   "license": "ISC",
   "dependencies": {
     "case": "^1.6.3",
