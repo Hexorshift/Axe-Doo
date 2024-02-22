@@ -1,6 +1,6 @@
-const { Client, GatewayIntentBits, Collection } = require('discord.js');
-const { promise } = require('readdirp');
-const CharacterAI = require('node_characterai');
+import { Client, GatewayIntentBits, Collection } from 'discord.js';
+import rd from 'readdirp';
+const { promise } = rd;
 
 class AxeDoo extends Client {
   constructor() {
@@ -8,26 +8,17 @@ class AxeDoo extends Client {
       intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildVoiceStates,
         GatewayIntentBits.GuildMessageReactions,
         GatewayIntentBits.MessageContent
       ]
     });
     this.commands = new Collection();
-    this.characterAI = new CharacterAI();
-    this.generatingResponse = false;
-  }
-
-  async authenticateAI() {
-    await this.characterAI.authenticateWithToken(
-      process.env.CHARACTER_AI_TOKEN,
-      process.env.CHARACTER_AI_ID_TOKEN
-    );
-    console.log('Authenticated');
   }
 
   async loadEvents() {
     for (const e of await promise('src/events', { fileFilter: '*.js' })) {
-      const event = require(e.fullPath);
+      const { default: event } = await import('file:///' + e.fullPath);
 
       this[event.once ? 'once' : 'on'](event.name, async (...args) => {
         await event.execute(...args);
@@ -38,7 +29,7 @@ class AxeDoo extends Client {
 
   async loadCommands() {
     for (const c of await promise('src/commands', { fileFilter: '*.js' })) {
-      const command = require(c.fullPath);
+      const { default: command } = await import('file:///' + c.fullPath);
 
       this.commands.set(command.data.name, command);
       if (command.modalCustomId) {
@@ -49,4 +40,4 @@ class AxeDoo extends Client {
   }
 }
 
-module.exports = new AxeDoo();
+export default new AxeDoo();

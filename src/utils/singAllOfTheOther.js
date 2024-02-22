@@ -1,13 +1,9 @@
-const wait = require('./wait');
+import wait from './wait.js';
 
 async function singAllOfTheOther(message) {
   const allOfTheOtherTriggerWords = ['rudolph', 'olive', '%christmassong2'];
 
-  if (
-    allOfTheOtherTriggerWords.some((word) =>
-      message.content.toLowerCase().includes(word.toLowerCase())
-    )
-  ) {
+  if (allOfTheOtherTriggerWords.some((word) => message.content.toLowerCase().includes(word.toLowerCase()))) {
     await message.channel.send('Rudolph the red-nosed reindeer');
     await wait(2);
     await message.channel.send('Had a very shiny nose');
@@ -22,4 +18,4 @@ async function singAllOfTheOther(message) {
   }
 }
 
-module.exports = singAllOfTheOther;
+export default singAllOfTheOther;

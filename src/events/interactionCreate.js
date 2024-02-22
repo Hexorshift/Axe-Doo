@@ -1,4 +1,4 @@
-const { InteractionType, Events } = require('discord.js');
+import { InteractionType, Events } from 'discord.js';
 
 const interactionCreate = {
   name: Events.InteractionCreate,
@@ -29,9 +29,7 @@ const interactionCreate = {
         });
       }
     } else if (interaction.type === InteractionType.ApplicationCommandAutocomplete) {
-      const autocompleteCommand = interaction.client.commands.get(
-        interaction.commandName
-      );
+      const autocompleteCommand = interaction.client.commands.get(interaction.commandName);
       await autocompleteCommand.suggestions(interaction);
     } else if (interaction.type === InteractionType.ModalSubmit) {
       const command = interaction.client.commands.get(interaction.customId);
@@ -40,4 +38,4 @@ const interactionCreate = {
   }
 };
 
-module.exports = interactionCreate;
+export default interactionCreate;
