@@ -6,7 +6,6 @@ import { fileURLToPath } from 'url';
 import { BOT_TOKEN } from '../secrets.js';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 (async () => {
   try {
@@ -14,7 +13,6 @@ const __dirname = path.dirname(__filename);
     await AxeDoo.loadEvents();
     await AxeDoo.loadCommands();
     await AxeDoo.login(BOT_TOKEN);
-
     AxeDoo.user.setActivity('kuru kuru', { type: ActivityType.Listening });
   } catch (error) {
     console.log(error);
