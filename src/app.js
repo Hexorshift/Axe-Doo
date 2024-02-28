@@ -1,11 +1,7 @@
 import AxeDoo from './AxeDoo.js';
 import deployCommands from './deployCommands.js';
-import path from 'node:path';
 import { ActivityType } from 'discord.js';
-import { fileURLToPath } from 'url';
 import { BOT_TOKEN } from '../secrets.js';
-
-const __filename = fileURLToPath(import.meta.url);
 
 (async () => {
   try {

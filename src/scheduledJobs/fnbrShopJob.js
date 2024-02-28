@@ -5,8 +5,8 @@ import getItemShopImage from '../utils/getItemShopImage.js';
 
 const fnbrShopJob = (client) => {
   const rule = new RecurrenceRule();
-  rule.hour = 23;
-  rule.minute = 33;
+  rule.hour = 0;
+  rule.minute = 0;
   rule.tz = 'Etc/UTC';
 
   const sendShopJob = scheduleJob(rule, async () => {
