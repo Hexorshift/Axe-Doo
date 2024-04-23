@@ -15,7 +15,7 @@
     "discord.js": "^14.14.1",
     "luxon": "^3.4.4",
     "node-schedule": "^2.1.1",
-    "puppeteer": "^22.6.5",
+    "puppeteer": "^22.7.0",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-adblocker": "^2.13.6",
     "readdirp": "^3.6.0",
