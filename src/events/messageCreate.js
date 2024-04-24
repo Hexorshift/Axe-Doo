@@ -39,7 +39,7 @@ const messageCreate = {
     }
 
     if (message.content.includes('kuru kuru')) {
-      return await message.channel({ files: ['src/assets/KuruKuru.wav'] });
+      return await message.channel.send({ files: ['src/assets/KuruKuru.wav'] });
     }
 
     if (new Date().getMonth() === 11) {
