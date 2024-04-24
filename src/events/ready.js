@@ -6,6 +6,7 @@ import goodAfternoonJob from '../scheduledJobs/goodAfternoonJob.js';
 import goodEveningJob from '../scheduledJobs/goodEveningJob.js';
 import goodNightJob from '../scheduledJobs/goodNightJob.js';
 import fnbrShopJob from '../scheduledJobs/fnbrShopJob.js';
+import { generateDependencyReport } from '@discordjs/voice';
 
 const ready = {
   name: Events.ClientReady,
@@ -20,6 +21,7 @@ const ready = {
     goodEveningJob();
     goodNightJob();
     fnbrShopJob(client);
+    console.log(generateDependencyReport());
   }
 };
 
