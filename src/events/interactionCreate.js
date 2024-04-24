@@ -19,7 +19,7 @@ const interactionCreate = {
           });
         }
 
-        console.log(command.data.name, interaction.user.tag);
+        // console.log(command.data.name, interaction.user.tag);
         await command.execute(interaction);
       } catch (error) {
         console.error(error);

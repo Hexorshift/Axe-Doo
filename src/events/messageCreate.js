@@ -26,7 +26,7 @@ const messageCreate = {
       if (connection) {
         const player = createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Pause } });
         const results = googleTTS.getAllAudioUrls(message.content, {
-          lang: 'ja',
+          lang: 'en-US',
           slow: false,
           host: 'https://translate.google.com',
           splitPunct: ',.?'
