@@ -15,11 +15,11 @@ const ready = {
     console.log(`${client.user.username} lives again!`);
 
     getItemShopImage();
-    catJob();
-    goodMorningJob();
-    goodAfternoonJob();
-    goodEveningJob();
-    goodNightJob();
+    catJob(client);
+    goodMorningJob(client);
+    goodAfternoonJob(client);
+    goodEveningJob(client);
+    goodNightJob(client);
     fnbrShopJob(client);
     console.log(generateDependencyReport());
   }

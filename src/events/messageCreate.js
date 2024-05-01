@@ -4,7 +4,14 @@ import wait from '../utils/wait.js';
 import singAllIWantFor from '../utils/singAllIWantFor.js';
 import singAllOfTheOther from '../utils/singAllOfTheOther.js';
 import * as googleTTS from 'google-tts-api';
-import { getVoiceConnection, createAudioPlayer, NoSubscriberBehavior, createAudioResource } from '@discordjs/voice';
+import {
+  getVoiceConnection,
+  createAudioPlayer,
+  NoSubscriberBehavior,
+  createAudioResource,
+  joinVoiceChannel,
+  AudioPlayerStatus
+} from '@discordjs/voice';
 
 const messageCreate = {
   name: Events.MessageCreate,
@@ -12,8 +19,44 @@ const messageCreate = {
   async execute(message) {
     if (message.author.bot) return;
 
+    const ttsUsers = ['526449871671001098', '353742902524116992', '396962054319112202'];
+
+    if (message.content.toLowerCase().includes('yowai mo') && message.member.voice.channelId) {
+      const voiceChannelInfo = message.member.voice;
+      let connection = getVoiceConnection(voiceChannelInfo.channelId);
+
+      if (!connection) {
+        connection = joinVoiceChannel({
+          channelId: voiceChannelInfo.channelId,
+          guildId: voiceChannelInfo.guild.id,
+          adapterCreator: voiceChannelInfo.guild.voiceAdapterCreator
+        });
+      }
+
+      const player = createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Pause } });
+      const resource = createAudioResource('https://dl.sndup.net/xr9x/yowai%20mo.mp3');
+
+      player.play(resource);
+      player.on(AudioPlayerStatus.Idle, (oldState, newState) => {
+        player.stop();
+
+        if (
+          !message.guild.channels.cache
+            .get(voiceChannelInfo.channelId)
+            .members.find(({ user }) => ttsUsers.includes(user.id))
+        ) {
+          connection.destroy();
+        }
+      });
+      connection.subscribe(player);
+      // console.log(message.member.voice);
+    }
+
+    // TTS messages
     if (
-      message.author.id === '526449871671001098' &&
+      !message.content.includes('yowai mo') &&
+      ttsUsers.includes(message.author.id) &&
+      (message.member.voice.selfMute || message.member.voice.serverMute) &&
       message.content &&
       !message.content.match(
         new RegExp(
@@ -21,21 +64,28 @@ const messageCreate = {
         )
       )
     ) {
-      const connection = getVoiceConnection(message.guild.id);
+      const voiceChannelInfo = message.member.voice;
+      let connection = getVoiceConnection(voiceChannelInfo.channelId);
 
-      if (connection) {
-        const player = createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Pause } });
-        const results = googleTTS.getAllAudioUrls(message.content, {
-          lang: 'en-US',
-          slow: false,
-          host: 'https://translate.google.com',
-          splitPunct: ',.?'
+      if (!connection) {
+        connection = joinVoiceChannel({
+          channelId: voiceChannelInfo.channelId,
+          guildId: voiceChannelInfo.guild.id,
+          adapterCreator: voiceChannelInfo.guild.voiceAdapterCreator
         });
-        const resource = createAudioResource(results[0].url);
-
-        player.play(resource);
-        connection.subscribe(player);
       }
+
+      const player = createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Pause } });
+      const results = googleTTS.getAllAudioUrls(message.content, {
+        lang: 'en-US',
+        slow: false,
+        host: 'https://translate.google.com',
+        splitPunct: ',.?'
+      });
+      const resource = createAudioResource(results[0].url);
+
+      player.play(resource);
+      connection.subscribe(player);
     }
 
     if (message.content.includes('kuru kuru')) {

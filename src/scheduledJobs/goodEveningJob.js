@@ -1,10 +1,10 @@
 import { RecurrenceRule, scheduleJob } from 'node-schedule';
 
-const goodEveningJob = () => {
+const goodEveningJob = (client) => {
   const rule = new RecurrenceRule();
   rule.hour = 18;
   rule.minute = 0;
-  rule.timezone = 'EST5EDT';
+  rule.timezone = 'America/New_York';
 
   const goodEveningJob = scheduleJob(rule, async () => {
     const channel = client.guilds.cache.get('760697375949324308').channels.cache.get('821035578240794644');

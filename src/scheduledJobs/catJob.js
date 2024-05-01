@@ -1,6 +1,6 @@
 import { RecurrenceRule, scheduleJob } from 'node-schedule';
 
-const catJob = () => {
+const catJob = (client) => {
   const rule = new RecurrenceRule();
   rule.date = 19;
   rule.hour = 0;

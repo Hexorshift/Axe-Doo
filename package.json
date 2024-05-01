@@ -18,7 +18,7 @@
     "libsodium-wrappers": "^0.7.13",
     "luxon": "^3.4.4",
     "node-schedule": "^2.1.1",
-    "puppeteer": "^22.7.0",
+    "puppeteer": "^22.7.1",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-adblocker": "^2.13.6",
     "readdirp": "^3.6.0",
