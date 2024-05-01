@@ -6,7 +6,7 @@ const voiceStateUpdate = {
   once: false,
   async execute(oldState, newState) {
     // TTS Voice channel join and leave
-    const ttsUsers = ['526449871671001098', '353742902524116992', '396962054319112202'];
+    const ttsUsers = ['526449871671001098', '353742902524116992'];
 
     if (ttsUsers.includes(oldState.id) && ttsUsers.includes(newState.id)) {
       const oldChannelId = oldState.channelId;
@@ -32,7 +32,7 @@ const voiceStateUpdate = {
         // Member move
         // Move if there are no other TTS users in vc
         if (!newState.guild.channels.cache.get(oldChannelId).members.find(({ user }) => ttsUsers.includes(user.id))) {
-          const connection = getVoiceConnection(oldChannelId);
+          const connection = getVoiceConnection(oldState.guild.id);
           if (connection) connection.destroy();
 
           joinVoiceChannel({

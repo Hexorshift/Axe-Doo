@@ -18,12 +18,51 @@ const messageCreate = {
   once: false,
   async execute(message) {
     if (message.author.bot) return;
+    const ttsUsers = ['526449871671001098', '353742902524116992'];
 
-    const ttsUsers = ['526449871671001098', '353742902524116992', '396962054319112202'];
+    if (!message.guild) {
+      const member = message.client.guilds.cache.get('760697375949324308').members.cache.get('526449871671001098');
+
+      if (member) {
+        if (
+          message.content &&
+          !message.content.match(
+            new RegExp(
+              /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi
+            )
+          )
+        ) {
+          const voiceChannelInfo = member.voice;
+          let connection = getVoiceConnection(voiceChannelInfo.guild.id);
+
+          if (!connection) {
+            connection = joinVoiceChannel({
+              channelId: voiceChannelInfo.channelId,
+              guildId: voiceChannelInfo.guild.id,
+              adapterCreator: voiceChannelInfo.guild.voiceAdapterCreator
+            });
+          }
+
+          const player = createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Pause } });
+          const results = googleTTS.getAllAudioUrls(message.content, {
+            lang: 'en-US',
+            slow: false,
+            host: 'https://translate.google.com',
+            splitPunct: ',.?'
+          });
+          const resource = createAudioResource(results[0].url);
+
+          player.play(resource);
+          connection.subscribe(player);
+          return;
+        }
+      }
+      return;
+    }
 
     if (message.content.toLowerCase().includes('yowai mo') && message.member.voice.channelId) {
       const voiceChannelInfo = message.member.voice;
-      let connection = getVoiceConnection(voiceChannelInfo.channelId);
+      let connection = getVoiceConnection(voiceChannelInfo.guild.id);
 
       if (!connection) {
         connection = joinVoiceChannel({
@@ -50,6 +89,7 @@ const messageCreate = {
       });
       connection.subscribe(player);
       // console.log(message.member.voice);
+      return;
     }
 
     // TTS messages
@@ -65,7 +105,7 @@ const messageCreate = {
       )
     ) {
       const voiceChannelInfo = message.member.voice;
-      let connection = getVoiceConnection(voiceChannelInfo.channelId);
+      let connection = getVoiceConnection(voiceChannelInfo.guild.id);
 
       if (!connection) {
         connection = joinVoiceChannel({
@@ -86,6 +126,7 @@ const messageCreate = {
 
       player.play(resource);
       connection.subscribe(player);
+      return;
     }
 
     if (message.content.includes('kuru kuru')) {
@@ -95,6 +136,7 @@ const messageCreate = {
     if (new Date().getMonth() === 11) {
       await singAllIWantFor(message);
       await singAllOfTheOther(message);
+      return;
     }
 
     if (message.content.toLowerCase().includes('fnbr-shop')) {
@@ -105,6 +147,7 @@ const messageCreate = {
       );
       await wait(1);
       await message.channel.send('we can do a **whole** lotta inting');
+      return;
     }
 
     for (const key in triggerWords) {

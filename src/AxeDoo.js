@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, Collection } from 'discord.js';
+import { Client, GatewayIntentBits, Collection, Partials } from 'discord.js';
 import rd from 'readdirp';
 const { promise } = rd;
 
@@ -6,12 +6,14 @@ class AxeDoo extends Client {
   constructor() {
     super({
       intents: [
+        GatewayIntentBits.DirectMessages,
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.GuildVoiceStates,
         GatewayIntentBits.GuildMessageReactions,
         GatewayIntentBits.MessageContent
-      ]
+      ],
+      partials: [Partials.Channel, Partials.Message]
     });
     this.commands = new Collection();
   }
