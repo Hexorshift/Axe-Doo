@@ -4,7 +4,7 @@ const goodNightJob = (client) => {
   const rule = new RecurrenceRule();
   rule.hour = 23;
   rule.minute = 59;
-  rule.timezone = 'America/New_York';
+  rule.timezone = 'EST5EDT';
 
   const goodNightJob = scheduleJob(rule, async () => {
     const channel = client.guilds.cache.get('760697375949324308').channels.cache.get('821035578240794644');

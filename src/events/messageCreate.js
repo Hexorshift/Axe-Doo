@@ -143,10 +143,11 @@ const messageCreate = {
       if (!message.guild) ttsDM(message);
       else {
         ttsGuild(message);
-        playAudioTriggersGuild(message);
       }
       return;
     }
+
+    playAudioTriggersGuild(message);
 
     if (message.content.includes('kuru kuru')) {
       return await message.channel.send({ files: ['src/assets/KuruKuru.wav'] });
