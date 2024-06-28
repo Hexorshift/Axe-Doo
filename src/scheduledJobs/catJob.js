@@ -5,7 +5,7 @@ const catJob = (client) => {
   rule.date = 19;
   rule.hour = 0;
   rule.minute = 0;
-  rule.timezone = 'EST5EDT';
+  rule.timezone = 'America/New_York';
 
   const sendCatJob = scheduleJob(rule, async () => {
     const channel = client.guilds.cache.get('760697375949324308').channels.cache.get('768530082271592508');

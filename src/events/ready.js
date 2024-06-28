@@ -21,7 +21,7 @@ const ready = {
     goodEveningJob(client);
     goodNightJob(client);
     fnbrShopJob(client);
-    console.log(generateDependencyReport());
+    // console.log(generateDependencyReport());
   }
 };
 
