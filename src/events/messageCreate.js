@@ -81,7 +81,6 @@ const ttsDM = (message) => {
           player.play(resource);
           player.on(AudioPlayerStatus.Idle, (oldState, newState) => {
             player.stop();
-            connection.destroy();
           });
           connection.subscribe(player);
           return;
