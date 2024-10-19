@@ -5,5 +5,6 @@ export default {
   lethimcookmusic: 'https://dl.sndup.net/kr2y/letcook.mp3',
   lethimcook: 'https://dl.sndup.net/tsc9/Let%20Him%20Cook%20No%20Music.mp3',
   dangerknocks: 'https://dl.sndup.net/q8mk/dangerknocks.mp3',
-  youkoso: 'https://dl.sndup.net/4xx93/youkoso.mp3'
+  youkoso: 'https://dl.sndup.net/4xx93/youkoso.mp3',
+  ksi: 'https://dl.sndup.net/jj88w/KSI.mp3'
 };
