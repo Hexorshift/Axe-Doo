@@ -37,7 +37,7 @@ const ttsGuild = (message) => {
 
     const player = createAudioPlayer({ behaviors: { noSubscriber: NoSubscriberBehavior.Pause } });
     const results = googleTTS.getAllAudioUrls(message.content, {
-      lang: 'en-HK',
+      lang: 'en-AU',
       slow: false,
       host: 'https://translate.google.com',
       splitPunct: ',.?'
@@ -88,7 +88,7 @@ const ttsDM = (message) => {
       }
 
       const results = googleTTS.getAllAudioUrls(message.content, {
-        lang: 'en-HK',
+        lang: 'en-AU',
         slow: false,
         host: 'https://translate.google.com',
         splitPunct: ',.?'
